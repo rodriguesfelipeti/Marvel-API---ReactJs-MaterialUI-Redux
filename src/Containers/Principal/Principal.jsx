@@ -4,6 +4,7 @@ import { InputAdornment, TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
 import { CardsContainer } from '../'
+import { ControlButtons } from '../../Components/'
 
 const useStyles = makeStyles((theme) => ({
     textContainer: {
@@ -46,6 +47,7 @@ const Principal = () => {
             </form>
           </div>
          <CardsContainer />
+         <ControlButtons />
       </div>
   );
 }
