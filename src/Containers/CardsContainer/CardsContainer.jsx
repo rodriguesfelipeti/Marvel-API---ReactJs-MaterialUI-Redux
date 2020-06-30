@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import md5 from 'md5'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { CardItem } from '../../Components'
-import { Button } from '@material-ui/core'
 
 const useStyles = makeStyles(({
     card__container: {
@@ -30,7 +29,6 @@ const CardContainer = () => {
     const indexOffset = useSelector( state => state.pageReducer.indexOffset )
 
     useEffect(() => {
-        console.log('effect card container')
         const privateKey = 'f2a503625a7d13a9900bee7496077ba9bc6dea44'
         const publicKey = '996eb487c975ad0bd4561aee7cc427df'
         const actualTime = 1
@@ -39,10 +37,9 @@ const CardContainer = () => {
         fetch(`http://gateway.marvel.com/v1/public/characters?ts=${actualTime}&apikey=${publicKey}&hash=${hash}&limit=${indexStore}&offset=${indexOffset}`)
         .then(response => response.json())
         .then(data => setCatalog(data.data.results))
-    }, [indexStore])
+    }, [indexStore, indexOffset])
     
 
-    console.log(indexStore)
     const classes = useStyles()
 
     return(

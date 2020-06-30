@@ -1,10 +1,13 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import { InputAdornment, TextField } from '@material-ui/core';
+import { InputAdornment, TextField, CircularProgress  } from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import SearchIcon from '@material-ui/icons/Search';
+import md5 from 'md5'
 
 import { CardsContainer } from '../'
 import { ControlButtons } from '../../Components/'
+import { useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
     textContainer: {
@@ -20,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
     '@media (max-width: 720px)': {
         inputText: {
-            width: 'auto'
+            width: 300  
         },
     }
   }));
@@ -28,21 +31,53 @@ const useStyles = makeStyles((theme) => ({
 const Principal = () => {
     const classes = useStyles();
 
+    const [catalog, setCatalog] = useState([])
+
+    const handleText = (e) => {
+        const char = e.target.value
+        if(char.length > 1) {
+            console.log(char)
+            const privateKey = 'f2a503625a7d13a9900bee7496077ba9bc6dea44'
+            const publicKey = '996eb487c975ad0bd4561aee7cc427df'
+            const actualTime = 1
+
+            const hash = md5(`${actualTime}${privateKey}${publicKey}`)
+            fetch(`http://gateway.marvel.com/v1/public/characters?nameStartsWith=${char}&ts=${actualTime}&apikey=${publicKey}&hash=${hash}&limit=20&offset=20`)
+            .then(response => response.json())
+            .then(data => setCatalog(data.data.results))
+            
+
+        }
+    }   
+ 
+  console.log(catalog)
+
   return (
       <div className={classes.app__container}>
           <div className={classes.textContainer}>
             <form noValidate autoComplete="off">
-                <TextField  className={classes.inputText} 
-                            id="filled-basic" 
-                            label="Procurar" 
-                            variant="filled"
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment>
-                                        <SearchIcon />
-                                    </InputAdornment>
-                                )
-                            }} 
+                <Autocomplete
+                    id="asynchronous-demo"
+                    className={classes.inputText}
+                    getOptionSelected={(option, value) => option.name === value.name}
+                    getOptionLabel={(option) => option.name}
+                    options={catalog}
+                    renderInput={(params) => (
+                        <TextField
+                        {...params}
+                        label="Search character"
+                        variant="filled"
+                        onChange={handleText}
+                        InputProps={{
+                            ...params.InputProps,
+                            endAdornment: (
+                            <React.Fragment>
+                                {params.InputProps.endAdornment}
+                            </React.Fragment>
+                            ),
+                        }}
+                        />
+                    )}
                 />
             </form>
           </div>
