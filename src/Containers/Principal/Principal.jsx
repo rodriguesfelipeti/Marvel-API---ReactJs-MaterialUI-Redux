@@ -2,13 +2,15 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import md5 from 'md5'
-
 import { CardsContainer } from '../'
 import { ControlButtons } from '../../Components/'
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { selectedChar } from '../../redux/actions'
+import service from '../../service/service'
+
+
+
 
 const useStyles = makeStyles((theme) => ({
     textContainer: {
@@ -37,15 +39,7 @@ const Principal = () => {
     const handleText = (e) => {
         const char = e.target.value
         if(char.length > 1) {
-            console.log(char)
-            const privateKey = 'f2a503625a7d13a9900bee7496077ba9bc6dea44'
-            const publicKey = '996eb487c975ad0bd4561aee7cc427df'
-            const actualTime = Date.now()
-            const hash = md5(`${actualTime}${privateKey}${publicKey}`)
-            const url = `http://gateway.marvel.com/v1/public/characters?nameStartsWith=${char}&ts=${actualTime}&apikey=${publicKey}&hash=${hash}`
-            fetch(url)
-            .then(response => response.json())
-            .then(data => setCatalog(data.data.results))
+            service.getSearchChar(char).then(res => setCatalog(res.data.results))
         }
     }   
 
