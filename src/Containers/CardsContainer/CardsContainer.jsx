@@ -25,6 +25,7 @@ const useStyles = makeStyles(({
 const CardContainer = () => {
 
     const [catalog, setCatalog] = useState([])
+    const selectedChar = useSelector(state => state.pageReducer.selectedChar)
     const indexStore = useSelector( state => state.pageReducer.indexSearchApi)
     const indexOffset = useSelector( state => state.pageReducer.indexOffset )
 
@@ -32,12 +33,16 @@ const CardContainer = () => {
         const privateKey = 'f2a503625a7d13a9900bee7496077ba9bc6dea44'
         const publicKey = '996eb487c975ad0bd4561aee7cc427df'
         const actualTime = 1
-
         const hash = md5(`${actualTime}${privateKey}${publicKey}`)
-        fetch(`http://gateway.marvel.com/v1/public/characters?ts=${actualTime}&apikey=${publicKey}&hash=${hash}&limit=${indexStore}&offset=${indexOffset}`)
+        let url = `http://gateway.marvel.com/v1/public/characters?ts=${actualTime}&apikey=${publicKey}&hash=${hash}&limit=${indexStore}&offset=${indexOffset}`
+        if(selectedChar) {
+            url = `http://gateway.marvel.com/v1/public/characters/${selectedChar}?&ts=${actualTime}&apikey=${publicKey}&hash=${hash}`
+        }
+        console.log(url)
+        fetch(url)
         .then(response => response.json())
         .then(data => setCatalog(data.data.results))
-    }, [indexStore, indexOffset])
+    }, [indexStore, indexOffset, selectedChar])
     
 
     const classes = useStyles()

@@ -1,13 +1,14 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import { InputAdornment, TextField, CircularProgress  } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import SearchIcon from '@material-ui/icons/Search';
 import md5 from 'md5'
 
 import { CardsContainer } from '../'
 import { ControlButtons } from '../../Components/'
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { selectedChar } from '../../redux/actions'
 
 const useStyles = makeStyles((theme) => ({
     textContainer: {
@@ -30,8 +31,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Principal = () => {
     const classes = useStyles();
-
     const [catalog, setCatalog] = useState([])
+    const dispatch = useDispatch()
 
     const handleText = (e) => {
         const char = e.target.value
@@ -45,13 +46,14 @@ const Principal = () => {
             fetch(`http://gateway.marvel.com/v1/public/characters?nameStartsWith=${char}&ts=${actualTime}&apikey=${publicKey}&hash=${hash}&limit=20&offset=20`)
             .then(response => response.json())
             .then(data => setCatalog(data.data.results))
-            
-
         }
     }   
- 
-  console.log(catalog)
 
+    const handleSelect = (option) => {
+
+        dispatch(selectedChar(option.id))
+    }
+ 
   return (
       <div className={classes.app__container}>
           <div className={classes.textContainer}>
@@ -59,7 +61,10 @@ const Principal = () => {
                 <Autocomplete
                     id="asynchronous-demo"
                     className={classes.inputText}
-                    getOptionSelected={(option, value) => option.name === value.name}
+                    getOptionSelected={(option, value) => {
+                        handleSelect(option)
+                        return option.name === value.name
+                    }}
                     getOptionLabel={(option) => option.name}
                     options={catalog}
                     renderInput={(params) => (
