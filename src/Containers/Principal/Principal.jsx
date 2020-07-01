@@ -40,10 +40,10 @@ const Principal = () => {
             console.log(char)
             const privateKey = 'f2a503625a7d13a9900bee7496077ba9bc6dea44'
             const publicKey = '996eb487c975ad0bd4561aee7cc427df'
-            const actualTime = 1
-
+            const actualTime = Date.now()
             const hash = md5(`${actualTime}${privateKey}${publicKey}`)
-            fetch(`http://gateway.marvel.com/v1/public/characters?nameStartsWith=${char}&ts=${actualTime}&apikey=${publicKey}&hash=${hash}&limit=20&offset=20`)
+            const url = `http://gateway.marvel.com/v1/public/characters?nameStartsWith=${char}&ts=${actualTime}&apikey=${publicKey}&hash=${hash}`
+            fetch(url)
             .then(response => response.json())
             .then(data => setCatalog(data.data.results))
         }

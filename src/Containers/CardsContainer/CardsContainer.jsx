@@ -38,7 +38,6 @@ const CardContainer = () => {
         if(selectedChar) {
             url = `http://gateway.marvel.com/v1/public/characters/${selectedChar}?&ts=${actualTime}&apikey=${publicKey}&hash=${hash}`
         }
-        console.log(url)
         fetch(url)
         .then(response => response.json())
         .then(data => setCatalog(data.data.results))
