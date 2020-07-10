@@ -10,8 +10,6 @@ import { selectedChar } from '../../redux/actions'
 import service from '../../service/service'
 
 
-
-
 const useStyles = makeStyles((theme) => ({
     textContainer: {
        display: 'flex',
@@ -44,7 +42,6 @@ const Principal = () => {
     }   
 
     const handleSelect = (option) => {
-
         dispatch(selectedChar(option.id))
     }
  

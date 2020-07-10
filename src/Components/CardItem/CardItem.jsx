@@ -12,9 +12,11 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
+import ArrowForward from '@material-ui/icons/ArrowForward';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { Link } from 'react-router-dom';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -74,18 +76,21 @@ const CardItem = (item) => {
         }
         title={person.name}
       />
-      <CardMedia
-        className={classes.media}
-        image={image}
-        title={person.name}
-      />
+        <CardMedia
+          className={classes.media}
+          image={image}
+          title={person.name}
+        />
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
+        <Link to={{
+          pathname: '/singleChar',
+          props: person
+        }}>
+            <ArrowForward />
+        </Link>
         {person.description && 
         
           <IconButton

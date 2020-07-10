@@ -48,7 +48,7 @@ const Header = () => {
     return(
         <div className={classes.root}>
             <AppBar position="static">
-                <Button>    
+                <Button href="/">    
                     <Toolbar className={classes.toolbar}>
                         <img className={classes.imgLogo} src={LogoFull} alt="logo" />
                         <img className={classes.imgLogoMobile} src={Logo} alt="logo" />

@@ -1,23 +1,20 @@
 import React  from 'react';
+import { BrowserRouter } from 'react-router-dom'
+import Routes from './routes'
 import './App.scss';
-// import {
-//   BrowserRouter as Router,
-//   Switch,
-//   Route,
-//   Link
-// } from "react-router-dom";
-
-
 import { Header } from './Components'
-import { Principal } from './Containers'
 
 const App = () => { 
 
   return (
-    <div className="app">
-      <Header />
-      <Principal />
-    </div>
+    <React.Fragment>
+      <div className="app">
+        <Header />
+        <BrowserRouter>
+            <Routes />
+        </BrowserRouter>
+      </div>
+    </React.Fragment>
     
   );
 }
