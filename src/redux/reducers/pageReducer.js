@@ -1,9 +1,10 @@
-import { INCREASE_SEARCH, DECREASE_SEARCH, SELECTED_CHAR } from '../actions/actionTypes'
+import { INCREASE_SEARCH, DECREASE_SEARCH, SELECTED_CHAR, SELECTED_SINGLE_CHAR } from '../actions/actionTypes'
 
 const defaultState = {
     indexSearchApi: 9,
     indexOffset: 0,
-    selectedChar: false
+    selectedChar: false,
+    selectedSingleChar: false,
 }
 
 
@@ -34,7 +35,11 @@ export const pageReducer = (state = defaultState, action) => {
         ...state,
         selectedChar: action.char
       }
-  
+    case SELECTED_SINGLE_CHAR: 
+      return {
+        ...state,
+        selectedSingleChar: action.char
+      }
     default:
       return state;
   }

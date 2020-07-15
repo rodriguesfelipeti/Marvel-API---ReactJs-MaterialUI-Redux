@@ -16,7 +16,8 @@ import ArrowForward from '@material-ui/icons/ArrowForward';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Link } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux'
+import { selectedSingleChar } from '../../redux/actions'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,17 +53,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CardItem = (item) => {
+
+  const dispatch = useDispatch()
+
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const person = item.item
   const image = `${person.thumbnail.path}.${person.thumbnail.extension}`
 
-  // console.log(item.item)
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const handleSelecteChar = () => {
+    dispatch(selectedSingleChar(person))
+  }
+
+
   return (
+
     <Card className={classes.root}>
       <CardHeader
         avatar={
@@ -85,13 +94,10 @@ const CardItem = (item) => {
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <Link to={{
-          pathname: '/singleChar',
-          props: person
-        }}>
-            <ArrowForward />
+        <Link to="/singleChar" onClick={handleSelecteChar} variant="body2">
+          <ArrowForward />
         </Link>
-        {person.description && 
+        {person.description &&  
         
           <IconButton
             className={clsx(classes.expand, {
@@ -113,6 +119,7 @@ const CardItem = (item) => {
         </CardContent>
       </Collapse>
     </Card>
+    
   );
 }
 
