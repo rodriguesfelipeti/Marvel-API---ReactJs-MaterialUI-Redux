@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -50,13 +50,18 @@ const CardItem = (item) => {
 
 
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
   const person = item.item
   const image = `${person.thumbnail.path}.${person.thumbnail.extension}`
+  const [favorite, setFavorite] = useState(false)
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const handleFavorite = () => {
+    setFavorite(!favorite)
+  }
 
 
   return (
@@ -68,8 +73,10 @@ const CardItem = (item) => {
           title={person.name}
         />
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+        <IconButton aria-label="add to favorites" onClick={handleFavorite}>
+          {favorite && <FavoriteIcon color="error"/>}
+          {!favorite && <FavoriteIcon />}
+          
         </IconButton>
         {person.name}
         {person.description &&  

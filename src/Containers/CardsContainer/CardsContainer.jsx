@@ -61,13 +61,12 @@ const CardContainer = () => {
                 setTimeout(() => {
                     dispatch(increaseSearch())
                 }, 200);  
-                // window.removeEventListener('scroll', getMorePerson);  
             }
         });
+        
         if(selectedChar) {
             service.getChar(selectedChar).then(res => setCatalog(res.data.results)).then( () => setLoading(false)) 
         }else if(indexStore <= 99) {
-
             service.getFullChars(indexStore, indexOffset).then(res => setCatalog(res.data.results)).then(() => setLoading(false))
         }
     }, [indexStore, indexOffset, selectedChar, dispatch])

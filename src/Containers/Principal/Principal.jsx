@@ -79,7 +79,6 @@ const Principal = () => {
             </form>
           </div>
          <CardsContainer />
-         {/* <ControlButtons /> */}
       </div>
   );
 }
