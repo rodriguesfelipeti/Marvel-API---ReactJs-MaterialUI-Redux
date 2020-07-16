@@ -1,4 +1,4 @@
-export const handleScroll = (event) => {
+export const HandleScroll = (event) => {
     const body = document.body;
     const html = document.documentElement;
     const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;

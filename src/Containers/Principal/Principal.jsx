@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { CardsContainer } from '../'
-import { ControlButtons } from '../../Components/'
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { selectedChar } from '../../redux/actions'
@@ -32,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
 const Principal = () => {
     const classes = useStyles();
     const [catalog, setCatalog] = useState([])
-    const wrappedElement = document.getElementById('app_container');
     const dispatch = useDispatch()
 
     const handleText = (e) => {

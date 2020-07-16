@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { CardItem } from '../../Components'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { increaseSearch, deacreaseSearch } from '../../redux/actions'
+import { increaseSearch } from '../../redux/actions'
 
 
 import service from '../../service/service'
-import { handleScroll } from '../../utils/utils'
+import { HandleScroll } from '../../utils/utils'
 
 const useStyles = makeStyles((theme) => ({
     card__container: {
@@ -47,6 +47,7 @@ const CardContainer = () => {
 
     const [catalog, setCatalog] = useState([])
     const [loading, setLoading] = useState(false)
+
     const selectedChar = useSelector(state => state.pageReducer.selectedChar)
     const indexStore = useSelector( state => state.pageReducer.indexSearchApi)
     const indexOffset = useSelector( state => state.pageReducer.indexOffset)
@@ -54,28 +55,23 @@ const CardContainer = () => {
     const dispatch = useDispatch()
     useEffect(() => {    
 
-        window.addEventListener('scroll', getMorePerson);
-        
+        window.addEventListener('scroll', () => {
+            if(HandleScroll()) {
+                setLoading(true)
+                setTimeout(() => {
+                    dispatch(increaseSearch())
+                }, 200);  
+                // window.removeEventListener('scroll', getMorePerson);  
+            }
+        });
         if(selectedChar) {
             service.getChar(selectedChar).then(res => setCatalog(res.data.results)).then( () => setLoading(false)) 
         }else if(indexStore <= 99) {
 
             service.getFullChars(indexStore, indexOffset).then(res => setCatalog(res.data.results)).then(() => setLoading(false))
         }
-    }, [indexStore, indexOffset, selectedChar])
-    
-    const getMorePerson = () => {
-        if(handleScroll()) {
-            setLoading(true)
-            setTimeout(() => {
-                dispatch(increaseSearch())
-            }, 200);  
-            // setLoading(!loading)
-            window.removeEventListener('scroll', getMorePerson);  
-        }
-    }
-
-    console.log(loading)
+    }, [indexStore, indexOffset, selectedChar, dispatch])
+   
     return(
         <div className={classes.card__container}>
             {catalog.length === 0 && ( 
