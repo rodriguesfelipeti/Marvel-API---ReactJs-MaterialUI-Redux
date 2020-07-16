@@ -1,6 +1,6 @@
 import { actualTime, hash, publicKey } from './constants'
 //fetch api
-const _apiHost = `http://gateway.marvel.com/v1/public/characters`
+const _apiHost = `https://gateway.marvel.com/v1/public/characters`
 
 const request = (async (url, method = 'GET') => {
 
