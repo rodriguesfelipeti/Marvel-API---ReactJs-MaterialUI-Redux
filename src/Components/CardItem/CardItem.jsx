@@ -2,22 +2,16 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ArrowForward from '@material-ui/icons/ArrowForward';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux'
-import { selectedSingleChar } from '../../redux/actions'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
 
 const CardItem = (item) => {
 
-  const dispatch = useDispatch()
 
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -65,26 +58,10 @@ const CardItem = (item) => {
     setExpanded(!expanded);
   };
 
-  const handleSelecteChar = () => {
-    dispatch(selectedSingleChar(person))
-  }
-
 
   return (
 
     <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar} src={image}>
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={person.name}
-      />
         <CardMedia
           className={classes.media}
           image={image}
@@ -94,9 +71,7 @@ const CardItem = (item) => {
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <Link to="/singleChar" onClick={handleSelecteChar} variant="body2">
-          <ArrowForward />
-        </Link>
+        {person.name}
         {person.description &&  
         
           <IconButton

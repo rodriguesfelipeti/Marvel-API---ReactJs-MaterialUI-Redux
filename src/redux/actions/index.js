@@ -1,4 +1,4 @@
-import { INCREASE_SEARCH, DECREASE_SEARCH, SELECTED_CHAR, SELECTED_SINGLE_CHAR } from './actionTypes'
+import { INCREASE_SEARCH, DECREASE_SEARCH, SELECTED_CHAR, PAGE_LOADING, GET_MORE_PAGINATION } from './actionTypes'
 
 export const increaseSearch = () => ({
     type: INCREASE_SEARCH
@@ -15,7 +15,13 @@ export const selectedChar = (char) => ({
   char: char
 })
 
-export const selectedSingleChar = (char) => ({
-  type: SELECTED_SINGLE_CHAR,
-  char: char
+export const pageLoading = (value) => ({
+  type: PAGE_LOADING,
+  state: value
 })
+
+export const getMorePagination = (boolean) => ({
+  type: GET_MORE_PAGINATION,
+  state: boolean
+})
+

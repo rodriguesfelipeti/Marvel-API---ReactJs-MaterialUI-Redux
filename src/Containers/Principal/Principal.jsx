@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 const Principal = () => {
     const classes = useStyles();
     const [catalog, setCatalog] = useState([])
+    const wrappedElement = document.getElementById('app_container');
     const dispatch = useDispatch()
 
     const handleText = (e) => {
@@ -41,12 +42,14 @@ const Principal = () => {
         }
     }   
 
+
     const handleSelect = (option) => {
         dispatch(selectedChar(option.id))
     }
  
   return (
-      <div className={classes.app__container}>
+      
+      <div className="">
           <div className={classes.textContainer}>
             <form noValidate autoComplete="off">
                 <Autocomplete
@@ -78,7 +81,7 @@ const Principal = () => {
             </form>
           </div>
          <CardsContainer />
-         <ControlButtons />
+         {/* <ControlButtons /> */}
       </div>
   );
 }

@@ -2,16 +2,15 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom';
 
 import PrincipalRoute from './PrincipalRoute/PrincipalRoute'
-import SingleCharRoute from './SingleCharRoute/SingleCharRoute'
 
 const Routes = () => (
     <Switch>
         <Route path="/" exact={true}>
             <PrincipalRoute />
         </Route>
-        <Route path="/singleChar">
+        {/* <Route path="/singleChar">
             <SingleCharRoute />
-        </Route>
+        </Route> */}
     </Switch>
 )
 
