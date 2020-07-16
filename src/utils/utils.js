@@ -5,7 +5,6 @@ export const HandleScroll = (event) => {
     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
     const windowBottom = (windowHeight + window.pageYOffset) + 100
     if (windowBottom >= docHeight) {
-        console.log('chegou ao fim')
         return true
     } 
     return false 
