@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -11,6 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+import { addFavorite, removeFavorite } from '../../redux/actions'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -53,16 +56,12 @@ const CardItem = (item) => {
   const [expanded, setExpanded] = useState(false);
   const person = item.item
   const image = `${person.thumbnail.path}.${person.thumbnail.extension}`
-  const [favorite, setFavorite] = useState(false)
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
-  const handleFavorite = () => {
-    setFavorite(!favorite)
-  }
-
+  const favorites = useSelector(state => state.favoritesReducer.favorites)
+  const dispatch = useDispatch()
+  const existsFavorite = () => favorites.filter( res => res.id === person.id).length > 0
+  const handleExpandClick = () => setExpanded(!expanded)
+  const returnFavoriteIcon = () => existsFavorite() ? <FavoriteIcon color="error" /> : <FavoriteIcon />
+  const handleFavorite = () => !existsFavorite() ? dispatch(addFavorite(person)) : dispatch(removeFavorite(person))
 
   return (
 
@@ -74,9 +73,7 @@ const CardItem = (item) => {
         />
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites" onClick={handleFavorite}>
-          {favorite && <FavoriteIcon color="error"/>}
-          {!favorite && <FavoriteIcon />}
-          
+          {returnFavoriteIcon()}
         </IconButton>
         {person.name}
         {person.description &&  

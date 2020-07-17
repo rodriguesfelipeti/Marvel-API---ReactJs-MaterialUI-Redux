@@ -1,4 +1,5 @@
-import { INCREASE_SEARCH, DECREASE_SEARCH, SELECTED_CHAR, PAGE_LOADING, GET_MORE_PAGINATION } from './actionTypes'
+import { INCREASE_SEARCH, DECREASE_SEARCH, SELECTED_CHAR, PAGE_LOADING, GET_MORE_PAGINATION,
+         ADD_FAVORITE, REMOVE_FAVORTE } from './actionTypes'
 
 export const increaseSearch = () => ({
     type: INCREASE_SEARCH
@@ -25,3 +26,12 @@ export const getMorePagination = (boolean) => ({
   state: boolean
 })
 
+export const addFavorite = (char) => ({
+  type: ADD_FAVORITE,
+  char: char
+})
+
+export const removeFavorite = (char) => ({
+  type: REMOVE_FAVORTE,
+  char: char
+})

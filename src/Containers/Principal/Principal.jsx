@@ -2,11 +2,13 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { CardsContainer } from '../'
+import { CardsContainer, FavoritesContainer } from '../'
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectedChar } from '../../redux/actions'
 import service from '../../service/service'
+
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -31,6 +33,8 @@ const useStyles = makeStyles((theme) => ({
 const Principal = () => {
     const classes = useStyles();
     const [catalog, setCatalog] = useState([])
+    const favorites = useSelector(state => state.favoritesReducer.favorites)
+
     const dispatch = useDispatch()
 
     const handleText = (e) => {
@@ -48,6 +52,7 @@ const Principal = () => {
   return (
       
       <div className="">
+          {favorites.length > 0 && <FavoritesContainer />}
           <div className={classes.textContainer}>
             <form noValidate autoComplete="off">
                 <Autocomplete
@@ -74,11 +79,11 @@ const Principal = () => {
                             ),
                         }}
                         />
-                    )}
+                    )}  
                 />
             </form>
           </div>
-         <CardsContainer />
+         <CardsContainer props={catalog}/>
       </div>
   );
 }
